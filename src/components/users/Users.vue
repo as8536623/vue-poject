@@ -53,7 +53,9 @@
           </el-dialog>
           <el-dialog title="权限分配用户" :visible.sync="powerFormVisible">
             <el-form>
-              <el-form-item>
+              <p>当前用户：{{poweruser.username}}</p>
+              <p>当前角色：{{poweruser.role_name}}</p>
+              <el-form-item label="选择角色：">
                 <el-select v-model="value" placeholder="请选择">
                   <el-option v-for="item in roles" :key="item.id" :label="item.roleName" :value="item.id">
                   </el-option>
@@ -61,7 +63,7 @@
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button @click="powerFormVisible = false">取 消</el-button>
+              <el-button @click="powerk">取 消</el-button>
               <el-button type="primary" @click="powerUser">确 定</el-button>
             </div>
           </el-dialog>
@@ -84,10 +86,10 @@
               <el-button type="primary" icon="el-icon-edit" @click="editUser(scope.row.id)"></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="分配权限" placement="top-start" :enterable="false">
-              <el-button type="success" icon="el-icon-setting" @click="powerInfo(scope.row)"></el-button>
+              <el-button type="success" icon="el-icon-setting" @click="powerInfo(scope.row)" ></el-button>
             </el-tooltip>
             <el-tooltip class="item" effect="dark" content="删除用户" placement="top-start" :enterable="false">
-              <el-button type="danger" icon="el-icon-delete" @click="open(scope.row)"></el-button>
+              <el-button type="danger" icon="el-icon-delete" @click="open(scope.row)" ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -296,21 +298,30 @@
         },
         async powerUser(){
           const result = await this.$http.put(`users/${this.poweruser.id}/role`,{rid:this.value} );
+          console.log(result)
           if (result.data.meta.status== 200 && this.value!='') {
             this.$message.success('分配成功');
             this.powerFormVisible = false;
             this.userlist();
-          } else if(this.poweruser.id==500) {
-            this.$message.error('不能修改系统管理员权限');
+          } else if(this.poweruser.id== 500){
+            this.$message.error('不能修改系统用户');
           }else{
             this.$message.error('分配失败');
           }
+        },
+        powerk(){
+          this.powerFormVisible = false;
+          this.value='';
         }
       }
     }
 </script>
 
 <style scoped lang="less">
+  .el-form{
+    width:35%;
+
+  }
 .el-card{
   margin-top: 20px;
   line-height: 0;
@@ -319,4 +330,11 @@
 .el-table{
   margin-top: 20px;
 }
+  p{
+    width: 100%;
+   float: left;
+    text-align: left;
+    padding-bottom: 20px;
+    font-size:15px
+  }
 </style>
