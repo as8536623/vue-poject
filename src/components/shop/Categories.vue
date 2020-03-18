@@ -26,6 +26,23 @@
           </template>
         </tree-table>
         <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage.pagenum" :page-sizes="[1,5,10,15]" :page-size="currentPage.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total"></el-pagination>
+      <el-button type="primary">添加分类</el-button>
+      <template>
+        <el-table :data="tableData" style="width: 100%;margin-bottom: 20px;" row-key="cat_id" border :tree-props="{children: 'children',hasChildren: 'hasChildren'}">
+          <el-table-column  prop="index" label="#" width="180" type="index">
+            <template slot-scope="scope">
+              <span v-if="scope.row.cat_level == 0">{{scope.row.cat_id}}</span>
+              <span v-else></span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="cat_name" label="分类名称" width="180"></el-table-column>
+          <el-table-column prop="cat_level" label="是否有效" width="180"></el-table-column>
+          <el-table-column prop="name" label="排序" width="180"></el-table-column>
+          <el-table-column prop="address" label="操作"></el-table-column>
+        </el-table>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage.pagenum" :page-sizes="[1,5,10,15]" :page-size="currentPage.pagesize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+        </el-pagination>
+      </template>
     </el-card>
     <!-- 添加分类的对话框 -->
     <el-dialog title="添加分类" :visible.sync="dialogFormVisible" @close="resetForm">
