@@ -96,20 +96,19 @@
     overflow: hidden;
   }
   .flod{
-    height: 50px;
-    margin: 0;
-    padding-left: 0;
-    list-style: none;
-    line-height: 50px;
-    background-color: #00a0d2;
+     height: 50px;
+     margin: 0;
+     padding-left: 0;
+     list-style: none;
+     line-height: 50px;
+     background-color: #00a0d2;
 
-  }
+   }
 
   .el-main {
     background-color: #E9EEF3;
     color: #333;
-    text-align: center;
-    line-height: 160px;
+    line-height:10px;
   }
   .iconfont{
     margin-right: 20px;
