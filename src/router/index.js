@@ -9,8 +9,11 @@ import Rights from '../components/power/Rights.vue'
 import Goods from '../components/shop/Goods.vue'
 import Params from '../components/shop/Params.vue'
 import Categories from '../components/shop/Categories.vue'
+import Add from '../components/shop/Add.vue'
+import Edit from '../components/shop/Edit.vue'
 import Orders from '../components/order/Orders.vue'
 import Reports from '../components/data/Reports.vue'
+
 
 Vue.use(VueRouter)
 
@@ -39,7 +42,7 @@ const routes = [
       component:Rights
     },{
       path:'/goods',
-      component:Goods
+      component:Goods,
     },{
       path:'/params',
       component:Params
@@ -52,7 +55,15 @@ const routes = [
     },{
       path:'/reports',
       component:Reports
-    }
+    },{
+      path:'/goods/add',
+      component:Add
+    },
+      ,{
+        path:'/goods/edit',
+        name:'edit',
+        component:Edit
+      }
     ]
   }
 ]

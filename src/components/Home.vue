@@ -1,12 +1,15 @@
 <template>
     <el-container>
       <el-header>
-        <el-button @click="singout">退出</el-button>
+        <el-button @click="singout">{{username}}退出</el-button>
       </el-header>
       <el-container>
         <el-aside :width="flodc ?'64px':'200px'">
           <el-menu :unique-opened="true" :collapse-transition="false" :collapse="flodc" router :default-active="activePath">
-            <div class="flod" @click="flodclick">|||</div>
+            <div class="flod" @click="flodclick"  >
+              <i v-if='flodc' class="el-icon-s-unfold"></i>
+              <i v-else class="el-icon-s-fold "></i>
+            </div>
             <el-submenu  :index="item.id+''" v-for="item in menulist" :key="item.id">
               <template slot="title">
                 <i :class="iconid[item.id]"></i>
@@ -39,12 +42,14 @@
           145:'iconfont icon-baobiao'
         },
         flodc:false,
-        activePath:''
+        activePath:'',
+        username:''
       }
     },
     created(){
       this.getlist();
-      this.activePath=window.sessionStorage.getItem('activePath')
+      this.activePath=window.sessionStorage.getItem('activePath');
+      this.username=window.sessionStorage.getItem('user')
     },
     methods:{
       singout(){

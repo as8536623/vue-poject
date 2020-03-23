@@ -333,26 +333,31 @@
         },
         //修改选项数据
         async handleInputConfirm(scope) {
-          if(scope.inputValue!==''){
-            scope.attr_vals.push(scope.inputValue.trim());
-            const result=await this.$http.put(`categories/${scope.cat_id}/attributes/${scope.attr_id}`,{attr_name:scope.attr_name,attr_sel:scope.attr_sel,attr_vals:scope.attr_vals.join(',')});
-            if(result.data.meta.status==200) {
-              scope.inputVisible = false;
-              scope.inputValue = '';
-              this.$message.success('成功');
-            }else{
-              this.$message.error('失败')
-            }
-          }else{
+          if(scope.inputValue.trim().length==0){
             scope.inputVisible = false;
             scope.inputValue = '';
-            return
+            return false
+          }
+          scope.attr_vals.push(scope.inputValue.trim());
+          scope.inputVisible = false;
+          scope.inputValue = '';
+          this.savecate(scope);
+
+        },
+        async savecate(scope){
+          const result=await this.$http.put(`categories/${scope.cat_id}/attributes/${scope.attr_id}`,{attr_name:scope.attr_name,attr_sel:scope.attr_sel,attr_vals:scope.attr_vals.join(',')});
+          if(result.data.meta.status==200) {
+            scope.inputVisible = false;
+            scope.inputValue = '';
+            this.$message.success('成功');
+          }else{
+            this.$message.error('失败')
           }
         },
         //删除选项
         handleClose(i,scope){
           scope.attr_vals.splice(i,1);
-          this.handleInputConfirm(scope)
+          this.savecate(scope)
         }
       }
     }

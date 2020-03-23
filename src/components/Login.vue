@@ -25,8 +25,8 @@
     data(){
       return{
         loginForm:{
-          username:'admin',
-          password:'123456'
+          username:'',
+          password:''
         },
         rules: {
           username: [
@@ -37,7 +37,8 @@
             { required: true, message: '请输入密码', trigger: 'blur' },
             { min: 3, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
           ]
-        }
+        },
+        queryParams:'',
       }
     },
     methods:{
@@ -49,9 +50,11 @@
           if (valid) {
             const result=await this.$http.post('login',this.loginForm);
             if(result.data.meta.status==200){
-              this.$message.success('登录成功');
               window.sessionStorage.setItem('token',result.data.data.token);
+              window.sessionStorage.setItem('user',result.data.data.username);
+              this.$message.success('登录成功');
               this.$router.push('/home')
+
             }else{
               this.$message.error('登陆失败');
             }

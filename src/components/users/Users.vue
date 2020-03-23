@@ -298,7 +298,6 @@
         },
         async powerUser(){
           const result = await this.$http.put(`users/${this.poweruser.id}/role`,{rid:this.value} );
-          console.log(result)
           if (result.data.meta.status== 200 && this.value!='') {
             this.$message.success('分配成功');
             this.powerFormVisible = false;
